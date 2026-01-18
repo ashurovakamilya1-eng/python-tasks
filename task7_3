@@ -1,0 +1,38 @@
+from datetime import datetime, timedelta
+
+def check_input(sub_array):
+   
+    if not isinstance(sub_array, list) or len(sub_array) != 2:
+        return False
+    
+    time_str, n = sub_array
+   
+    if not isinstance(time_str, str):
+        return False
+    try:
+        datetime.strptime(time_str, '%H.%M')
+    except ValueError:
+        return False
+   
+    if not isinstance(n, int) or n <= 0:
+        return False
+        
+    return True
+
+def calculate_time(valid_sub_array):
+  
+    time_str, n = valid_sub_array
+    
+    current_time = datetime.strptime(time_str, '%H.%M')
+  
+    new_time = current_time + timedelta(hours=n, minutes=n)
+
+    return new_time.strftime('%H.%M')
+
+def main(data):
+    
+    for sub_array in data:
+        if check_input(sub_array):
+            result = calculate_time(sub_array)
+            print(result)
+            break
